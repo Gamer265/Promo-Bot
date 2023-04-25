@@ -12,8 +12,8 @@ try:
 
     # for speed time stuffs
 
-    SPEED_START_TIME = 10
-    SPEED_STOP_TIME = 17
+    SPEED_START_TIME = 7
+    SPEED_STOP_TIME = 1
     SPEED = 15
 
     # for railway
