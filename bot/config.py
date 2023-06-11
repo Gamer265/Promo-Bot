@@ -14,7 +14,7 @@ try:
 
     SPEED_START_TIME = 7
     SPEED_STOP_TIME = 1
-    SPEED = 15
+    SPEED = 25
 
     # for railway
 
