@@ -7,7 +7,7 @@ try:
 except Exception as erc:
     log.info(str(erc))
 
-sched = AsyncIOScheduler(timezone="Asia/Kolkata")
+sched = AsyncIOScheduler(event_loop=bot.loop, timezone="Asia/Kolkata")
 FUTURE = []
 n = [0]
 _n = [0]
@@ -158,7 +158,7 @@ async def _(e):
     if not FUTURE:
         await e.reply("Successfully Started msg poster.")
         inter = dB.get("INTERVAL") or 30
-        future = AsyncIOScheduler()
+        future = AsyncIOScheduler(event_loop=bot.loop)
         future.add_job(on_every_min, "interval", minutes=inter, id="every_x_job")
         FUTURE.append(future)
         dB.set("EVERY_MIN", True)
@@ -270,7 +270,8 @@ def job():
     if FUTURE and dB.get("EVERY_MIN"):
         sched.add_job(speed_start, "cron", hour=SPEED_START_TIME)  # start time
         sched.add_job(stop_speed_start, "cron", hour=SPEED_STOP_TIME)  # stop time
-        sched.start()
+        bot.loop.call_soon_threadsafe(sched.start)
+
 
 
 def stop_job():
