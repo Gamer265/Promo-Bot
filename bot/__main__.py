@@ -248,7 +248,7 @@ async def speed_start():
         FUTURE[0].remove_job("every_x_job")
         FUTURE.clear()
         _inter = SPEED
-        _future = AsyncIOScheduler()
+        _future = AsyncIOScheduler(event_loop=bot.loop)  # Pass bot.loop here
         _future.add_job(on_every_min, "interval", minutes=_inter, id="severy_x_job")
         FUTURE.append(_future)
         _future.start()
@@ -259,10 +259,11 @@ async def stop_speed_start():
         FUTURE[0].remove_job("severy_x_job")
         FUTURE.clear()
         _inter = dB.get("INTERVAL") or 30
-        _future = AsyncIOScheduler()
+        _future = AsyncIOScheduler(event_loop=bot.loop)  # And here as well
         _future.add_job(on_every_min, "interval", minutes=_inter, id="every_x_job")
         FUTURE.append(_future)
         _future.start()
+
 
 
 def job():
@@ -282,7 +283,7 @@ if dB.get("KEYPROMO"):
 if dB.get("EVERY_MIN"):
     if not FUTURE:
         _inter = dB.get("INTERVAL") or 30
-        _future = AsyncIOScheduler()
+        _future = AsyncIOScheduler(event_loop=bot.loop)
         _future.add_job(on_every_min, "interval", minutes=_inter, id="every_x_job")
         FUTURE.append(_future)
         _future.start()
